@@ -8,4 +8,4 @@ Feature: Test logging in to facebook
     And and the user enters a valid password
     And and the user presses the Log In button
     Then The user should be logged in
-    And and brought to their newsfeed
+    And and brought to their feed
