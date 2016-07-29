@@ -2,7 +2,8 @@ Feature: HTML5 Video Player functionality on Youtube
 
   #Basic Set of Functionality. Video, Autoplay, Play, and Pause
   Background:
-    Given user is navigated to a Youtube video
+    Given user maximizes the window
+    And user is navigated to a Youtube video
     #And the page loads
 
   @Youtube
@@ -48,7 +49,7 @@ Feature: HTML5 Video Player functionality on Youtube
     When user presses the size button
     Then validate player is in Default mode
 
-  #Skipping through a video and testing the endcard.
+  #Skipping through a video and testing the end card.
     #Scenario: Test video end
     #Scenario: Test video end card
     #Scenario: Test video replay
