@@ -12,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 public class FacebookStepDefinitions {
     private WebDriver driver;
 
-    // TODO: Create a shared driver for all step files
     /*@Before
     public void initFeatureTest() {
         if (driver == null) {
