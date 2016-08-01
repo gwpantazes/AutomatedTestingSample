@@ -5,13 +5,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.By;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import pageObject.YoutubeLandingPage;
 import pageObject.YoutubeVideoPage;
 
 import static org.junit.Assert.assertFalse;
@@ -19,15 +12,11 @@ import static org.junit.Assert.assertTrue;
 
 public class YoutubeHTML5VideoStepDefinitions {
 
-    private WebDriver driver;
-
     private YoutubeVideoPage youtubeVideoPage;
 
     @Before
     public void initFeatureTest() {
-        if (driver == null) {
-            driver = new FirefoxDriver();
-        }
+        youtubeVideoPage = new YoutubeVideoPage(null);
     }
 
     @After
@@ -37,7 +26,7 @@ public class YoutubeHTML5VideoStepDefinitions {
 
     @Given("^user maximizes the window")
     public void maximizeVideo() throws Throwable {
-        youtubeVideoPage = new YoutubeVideoPage(driver);
+
         youtubeVideoPage.maximizeWindow();
     }
 
@@ -61,19 +50,8 @@ public class YoutubeHTML5VideoStepDefinitions {
     public void userPressesTheSizeButton() throws Throwable {
         boolean goingIntoTheaterMode = !youtubeVideoPage.isTheaterMode();
         youtubeVideoPage.pressTheaterModeButton();
-
         // Wait for theater mode transition because it takes some time
-        if (goingIntoTheaterMode) {
-            new WebDriverWait(driver, 5).until(ExpectedConditions.attributeContains(
-                    driver.findElement(By.id("page")),
-                    "class",
-                    "watch-stage-mode"));
-        } else {    // This one inverts the assumption with ExpectedConditions.not()
-            new WebDriverWait(driver, 5).until(ExpectedConditions.not(ExpectedConditions.attributeContains(
-                    driver.findElement(By.id("page")),
-                    "class",
-                    "watch-stage-mode")));
-        }
+        youtubeVideoPage.waitForTheaterMode(goingIntoTheaterMode);
     }
 
     // TODO: instead of if else, use map<string,runnable>
@@ -81,19 +59,8 @@ public class YoutubeHTML5VideoStepDefinitions {
     public void user_presses_the_fullscreen_button() throws Throwable {
         boolean goingIntoFullscreen = !youtubeVideoPage.isVideoFullscreen();
         youtubeVideoPage.pressFullscreenButton();
-
         // Wait for fullscreen because it takes some time
-        if (goingIntoFullscreen) {
-            new WebDriverWait(driver, 5).until(ExpectedConditions.attributeContains(
-                    youtubeVideoPage.getVideoPlayer(),
-                    "class",
-                    "ytp-fullscreen"));
-        } else {    // This one inverts the assumption with ExpectedConditions.not()
-            new WebDriverWait(driver, 5).until(ExpectedConditions.not(ExpectedConditions.attributeContains(
-                    youtubeVideoPage.getVideoPlayer(),
-                    "class",
-                    "ytp-fullscreen")));
-        }
+        youtubeVideoPage.waitForFullscreen(goingIntoFullscreen);
     }
 
     // TODO: Mark argument "is" and "is not" so that we don't have to test for null
@@ -110,7 +77,7 @@ public class YoutubeHTML5VideoStepDefinitions {
                     youtubeVideoPage.isVideoFullscreen());
         }
 
-        // Wish: validate using document.fullscreenElement: https://developer.mozilla.org/en-US/docs/Web/API/Document/fullscreenElement
+        // TODO: use document.fullscreenElement: https://developer.mozilla.org/en-US/docs/Web/API/Document/fullscreenElement
     }
 
     @Then("^(?:validate )?player is in Theater mode$")

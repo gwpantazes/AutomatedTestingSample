@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class YoutubeVideoPage extends AbstractPage{
 
@@ -43,6 +45,37 @@ public class YoutubeVideoPage extends AbstractPage{
 
     public WebElement getVideoPlayer() {
         return driver.findElement(By.className("html5-video-player"));
+    }
+
+    public YoutubeVideoPage waitForTheaterMode(boolean goingIntoTheaterMode){
+        // Wait for theater mode transition because it takes some time
+        if (goingIntoTheaterMode) {
+            new WebDriverWait(driver, 5).until(ExpectedConditions.attributeContains(
+                    driver.findElement(By.id("page")),
+                    "class",
+                    "watch-stage-mode"));
+        } else {    // This one inverts the assumption with ExpectedConditions.not()
+            new WebDriverWait(driver, 5).until(ExpectedConditions.not(ExpectedConditions.attributeContains(
+                    driver.findElement(By.id("page")),
+                    "class",
+                    "watch-stage-mode")));
+        }
+        return new YoutubeVideoPage(driver);
+    }
+
+    public YoutubeVideoPage waitForFullscreen(boolean goingIntoFullscreen) {
+        if (goingIntoFullscreen) {
+            new WebDriverWait(driver, 5).until(ExpectedConditions.attributeContains(
+                    this.getVideoPlayer(),
+                    "class",
+                    "ytp-fullscreen"));
+        } else {    // This one inverts the assumption with ExpectedConditions.not()
+            new WebDriverWait(driver, 5).until(ExpectedConditions.not(ExpectedConditions.attributeContains(
+                    this.getVideoPlayer(),
+                    "class",
+                    "ytp-fullscreen")));
+        }
+        return new YoutubeVideoPage(driver);
     }
 
 }

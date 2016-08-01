@@ -1,13 +1,18 @@
 package pageObject;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class AbstractPage {
 
     protected WebDriver driver;
 
     public AbstractPage(WebDriver driver) {
-        this.driver = driver;
+        if (driver == null) {
+            this.driver = new FirefoxDriver();
+        } else {
+            this.driver = driver;
+        }
     }
 
     public void maximizeWindow() {
