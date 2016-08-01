@@ -56,6 +56,7 @@ public class YoutubeHTML5VideoStepDefinitions {
         driver.findElement(By.className("ytp-play-button")).click();
     }
 
+    // TODO: instead of if else, use map<string,runnable>
     @When("^user presses the size button$")
     public void userPressesTheSizeButton() throws Throwable {
         boolean goingIntoTheaterMode = driver.findElements(By.className("watch-stage-mode")).size() == 0;
@@ -76,6 +77,7 @@ public class YoutubeHTML5VideoStepDefinitions {
         }
     }
 
+    // TODO: instead of if else, use map<string,runnable>
     @When("^user presses the fullscreen button$")
     public void user_presses_the_fullscreen_button() throws Throwable {
         boolean goingIntoFullscreen = driver.findElements(By.className("ytp-fullscreen")).size() == 0;
