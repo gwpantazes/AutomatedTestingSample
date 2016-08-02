@@ -31,7 +31,7 @@ public class AbstractPage {
     }
 
     public YoutubeLandingPage navigateToYoutube() {
-        driver.get("https://www.youtube.com");  // home page
+        driver.get("https://www.youtube.com");
         return new YoutubeLandingPage(driver);
     }
 
@@ -39,6 +39,11 @@ public class AbstractPage {
         driver.get("https://youtu.be/3h1wQUPHIy4"); // Anamanaguchi Capsule Silence
         // driver.get("https://youtu.be/dPeUd5hN3vs"); // An ad, so it won't show ads
         return new YoutubeVideoPage(driver);
+    }
+
+    public FacebookLandingPage navigateToFacebookLogin() {
+        driver.get("https://www.facebook.com");
+        return new FacebookLandingPage(driver);
     }
 
     public void closeDriver() {
