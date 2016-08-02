@@ -26,7 +26,6 @@ public class YoutubeHTML5VideoStepDefinitions {
 
     @Given("^user maximizes the window")
     public void maximizeVideo() throws Throwable {
-
         youtubeVideoPage.maximizeWindow();
     }
 
@@ -45,7 +44,6 @@ public class YoutubeHTML5VideoStepDefinitions {
         youtubeVideoPage.pressPlayButton();
     }
 
-    // TODO: instead of if-else construct, use map<string,runnable>
     @When("^user presses the size button$")
     public void userPressesTheSizeButton() throws Throwable {
         boolean goingIntoTheaterMode = !youtubeVideoPage.isTheaterMode();
@@ -54,13 +52,22 @@ public class YoutubeHTML5VideoStepDefinitions {
         youtubeVideoPage.waitForTheaterMode(goingIntoTheaterMode);
     }
 
-    // TODO: instead of if else, use map<string,runnable>
     @When("^user presses the fullscreen button$")
     public void user_presses_the_fullscreen_button() throws Throwable {
         boolean goingIntoFullscreen = !youtubeVideoPage.isVideoFullscreen();
         youtubeVideoPage.pressFullscreenButton();
         // Wait for fullscreen because it takes some time
         youtubeVideoPage.waitForFullscreen(goingIntoFullscreen);
+    }
+
+    @When("^user drags the scrubber from (\\d+) (?:(?:forward)|(?:back)) to (-?\\d+)$")
+    public void user_drags_the_scrubber_from_forward_to(int start, int end) throws Throwable {
+        youtubeVideoPage.clickAndDragVideoScrubber(start, end);
+    }
+
+    @When("^user clicks on the tracking bar at (\\d+)$")
+    public void user_clicks_on_the_tracking_bar_at(int point) throws Throwable {
+        youtubeVideoPage.clickOnProgressBar(point);
     }
 
     // TODO: Mark argument "is" and "is not" so that we don't have to test for null
@@ -76,8 +83,6 @@ public class YoutubeHTML5VideoStepDefinitions {
             assertFalse("Video is indicated to be fullscreen, but should be normal size.",
                     youtubeVideoPage.isVideoFullscreen());
         }
-
-        // TODO: use document.fullscreenElement: https://developer.mozilla.org/en-US/docs/Web/API/Document/fullscreenElement
     }
 
     @Then("^(?:validate )?player is in Theater mode$")
@@ -90,9 +95,6 @@ public class YoutubeHTML5VideoStepDefinitions {
     public void validateThePlayerIsInDefaultMode() throws Throwable {
         assertFalse("Player is not in Default size mode. Player is in Theater mode.",
                 youtubeVideoPage.isTheaterMode());
-        // class "watch-non-stage-mode" marks that the video is in default mode, not theater mode,
-        // but the class is not present initially. It only appears after theater mode has been turned off and on.
-        // Thus, we must only detect for watch-stage-mode.
     }
 
     @Then("^(?:validate )?the video (?:auto ?)?plays$")
@@ -101,7 +103,12 @@ public class YoutubeHTML5VideoStepDefinitions {
     }
 
     @Then("^validate the video is paused$")
-    public void validate_the_video_pauses() throws Throwable {
+    public void validateVideoPaused() throws Throwable {
         assertTrue("Video element is not paused", youtubeVideoPage.isVideoPaused() );
+    }
+
+    @Then("^validate video playback position is set to correct point based on (-?\\d+)$")
+    public void video_playback_position_will_be_set(int position) throws Throwable {
+        assertTrue(youtubeVideoPage.verifyPlaybackPosition(position));
     }
 }

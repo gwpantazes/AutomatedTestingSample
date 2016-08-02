@@ -2,9 +2,8 @@ Feature: HTML5 Video Player functionality on Youtube
 
   #Basic Set of Functionality. Video, Autoplay, Play, and Pause
   Background:
-    Given user maximizes the window
-    And user is navigated to a Youtube video
-    #And the page loads
+    #Given user maximizes the window
+    Given user is navigated to a Youtube video
 
   @Youtube
   Scenario: Test that video autoplays
@@ -55,5 +54,39 @@ Feature: HTML5 Video Player functionality on Youtube
     #Scenario: Test video replay
 
   #Tests for click and drag forward and back on the status bar with validation
-    #Scenario: Test click and dragging forward on the progress bar
-    #Scenario: Test click and dragging back on the progress bar
+  @Youtube
+  Scenario Outline: Click and drag forward on the video tracking bar
+    When user drags the scrubber from <start> forward to <end>
+    Then validate video playback position is set to correct point based on <end>
+
+    Examples:
+      | start | end |
+      | 0     | 20  |
+      | 1     | 99  |
+      | 50    | 100 |
+      | 0     | 999 |
+
+  @Youtube
+  Scenario Outline: Click and dragging back on the video tracking bar
+    When user drags the scrubber from <start> back to <end>
+    Then validate video playback position is set to correct point based on <end>
+
+    Examples:
+      | start | end  |
+      | 70    | 20   |
+      | 99    | 1    |
+      | 100   | 0    |
+      | 100   | -999 |
+
+  @Youtube
+  Scenario Outline: Click on the tracking bar
+    When user clicks on the tracking bar at <point>
+    Then validate video playback position is set to correct point based on <point>
+
+    Examples:
+      | point |
+      | 50    |
+      | 0     |
+      | 1     |
+      | 99    |
+      | 100   |
