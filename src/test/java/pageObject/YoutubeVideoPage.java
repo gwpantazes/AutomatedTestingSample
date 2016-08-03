@@ -2,16 +2,16 @@ package pageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObject.Utils.MathUtils;
+import shareddriver.SharedDriver;
 
 public class YoutubeVideoPage extends AbstractPage {
 
-    public YoutubeVideoPage(WebDriver driver) {
+    public YoutubeVideoPage(SharedDriver driver) {
         super(driver);
     }
 
@@ -44,7 +44,7 @@ public class YoutubeVideoPage extends AbstractPage {
     }
 
     public boolean isVideoPaused() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = driver;
         String videoElementJSLocatorString = "document.getElementById('player').getElementsByClassName('html5-main-video')[0]";
         return (Boolean) js.executeScript("return " + videoElementJSLocatorString + ".paused;");
     }
@@ -96,6 +96,7 @@ public class YoutubeVideoPage extends AbstractPage {
                 .click(this.getVideoPlayer())
                 .moveToElement(progressBar, clickXOffset, 1)
                 .clickAndHold()
+                .release()
                 .perform();
 
         return new YoutubeVideoPage(driver);
@@ -113,6 +114,7 @@ public class YoutubeVideoPage extends AbstractPage {
                 .moveToElement(progressBar, startXOffset, 1)
                 .clickAndHold()
                 .moveByOffset(endXOffset - startXOffset, 0)
+                .release()
                 .perform();
 
         return new YoutubeVideoPage(driver);

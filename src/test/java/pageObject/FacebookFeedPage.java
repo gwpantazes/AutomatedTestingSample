@@ -1,11 +1,11 @@
 package pageObject;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import shareddriver.SharedDriver;
 
 public class FacebookFeedPage extends FacebookCommonPage {
 
-    public FacebookFeedPage(WebDriver driver) {
+    public FacebookFeedPage(SharedDriver driver) {
         super(driver);
     }
 

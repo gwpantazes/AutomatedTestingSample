@@ -1,6 +1,5 @@
 package steps;
 
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -20,11 +19,6 @@ public class FacebookStepDefinitions {
     @Before
     public void initFeatureTest() {
         facebookLandingPage = new FacebookLandingPage(null);
-    }
-
-    @After
-    public void shutdownFeatureTest() {
-        facebookLandingPage.closeDriver();
     }
 
     @Given("^The user is navigated to the Facebook website$")

@@ -1,11 +1,11 @@
 package pageObject;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import shareddriver.SharedDriver;
 
 public class FacebookLandingPage extends FacebookCommonPage {
 
-    public FacebookLandingPage(WebDriver driver) {
+    public FacebookLandingPage(SharedDriver driver) {
         super(driver);
     }
 

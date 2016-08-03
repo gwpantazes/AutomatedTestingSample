@@ -1,18 +1,16 @@
 package pageObject;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import shareddriver.SharedDriver;
 
 import java.util.concurrent.TimeUnit;
 
 public class AbstractPage {
 
-    protected WebDriver driver;
-    // TODO: Use SharedDriver to save on time: https://github.com/cucumber/cucumber-jvm/blob/master/examples/java-webbit-websockets-selenium/src/test/java/cucumber/examples/java/websockets/SharedDriver.java
+    protected SharedDriver driver;
 
-    public AbstractPage(WebDriver driver) {
+    public AbstractPage(SharedDriver driver) {
         if (driver == null) {
-            this.driver = new FirefoxDriver();
+            this.driver = new SharedDriver();
             this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         } else {
             this.driver = driver;
