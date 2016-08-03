@@ -1,4 +1,4 @@
-package shareddriver;
+package driver;
 
 import cucumber.api.java.Before;
 import org.openqa.selenium.WebDriver;
@@ -6,6 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 public class SharedDriver extends EventFiringWebDriver {
+    // https://github.com/cucumber/cucumber-jvm/blob/master/examples/java-webbit-websockets-selenium/src/test/java/cucumber/examples/java/websockets/SharedDriver.java#L47
     private static final WebDriver REAL_DRIVER = new FirefoxDriver();
     private static final Thread CLOSE_THREAD = new Thread() {
         @Override

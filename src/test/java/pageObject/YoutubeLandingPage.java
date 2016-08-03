@@ -1,10 +1,10 @@
 package pageObject;
 
+import driver.SharedDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import shareddriver.SharedDriver;
 
 public class YoutubeLandingPage extends AbstractPage {
 

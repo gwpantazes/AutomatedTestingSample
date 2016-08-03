@@ -1,4 +1,4 @@
-package pageObject.Utils;
+package utils;
 
 public class MathUtils {
 

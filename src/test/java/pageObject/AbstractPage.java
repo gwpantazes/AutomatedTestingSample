@@ -1,17 +1,17 @@
 package pageObject;
 
-import shareddriver.SharedDriver;
-
-import java.util.concurrent.TimeUnit;
+import driver.SharedDriver;
 
 public class AbstractPage {
 
+    @SuppressWarnings("WeakerAccess")
     protected SharedDriver driver;
 
+    @SuppressWarnings("WeakerAccess")
     public AbstractPage(SharedDriver driver) {
         if (driver == null) {
             this.driver = new SharedDriver();
-            this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            //this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         } else {
             this.driver = driver;
         }
@@ -21,10 +21,11 @@ public class AbstractPage {
         driver.manage().window().maximize();
     }
 
-    public void threadWait(long seconds) throws Throwable{
+    public void threadWait(long seconds) throws Throwable {
         Thread.sleep(seconds * 1000);    // TODO: Convert to thread safe wait
     }
-    public void threadWait(String seconds) throws Throwable{
+
+    public void threadWait(String seconds) throws Throwable {
         Thread.sleep(Long.valueOf(seconds) * 1000);    // TODO: Convert to thread safe wait
     }
 
@@ -48,5 +49,3 @@ public class AbstractPage {
         driver.quit();
     }
 }
-
-
